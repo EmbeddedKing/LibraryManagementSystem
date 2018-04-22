@@ -1,6 +1,11 @@
 #ifndef __GLOBAL_H__
 #define __GLOBAL_H__
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 /* 图书馆最多放置的书籍 */
 #define LIB_MAXSIZE       200
 
@@ -16,12 +21,13 @@
 #define FILESUCCESS       8    /* file操作成功 */
 #define FILENOOPEN        9    /* file未打开 */
 #define FILECLOSE         10   /* file关闭失败 */
+#define SYSEXIT           11   /* 系统退出 */
 
 /* 书籍信息结构体
  * 增加属性需要修改以下函数内容
  * int file_write(LIBRARY_LIST_TYPE *library, FILE *data_file);
  * int file_init(LIBRARY_LIST_TYPE *library, FILE **library_fp);
- * void library_display(LIBRARY_LIST_TYPE library);
+ * void book_display(BOOK_INFO_TYPE book_info);
  */
 typedef struct _book_info {
 	char book_num[20];

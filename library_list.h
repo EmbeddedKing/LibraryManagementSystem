@@ -1,11 +1,6 @@
 #ifndef __LIBRARY_LIST_H__
 #define __LIBRARY_LIST_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "library_file.h"
-#include "library_management_system.h"
 #include "global.h"
 
 /* 创建一个library链表 */
@@ -23,6 +18,8 @@ int library_empty(LIBRARY_LIST_TYPE library);
 /* 计算library中book的数量 */
 int library_number(LIBRARY_LIST_TYPE library);
 /* 显示图书馆中全部的图书 */
-void library_display(LIBRARY_LIST_TYPE library);
+int library_display(LIBRARY_LIST_TYPE library);
+/* 打印图书的信息 */
+void book_display(BOOK_INFO_TYPE book_info);
 
 #endif

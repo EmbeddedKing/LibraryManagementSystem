@@ -9,10 +9,10 @@ int library_init(LIBRARY_LIST_TYPE *library)
     }
 	/* 初始化头结点 */
     memset((*library), '\0', sizeof(struct _library_node));
-	strcpy((*library)->book.book_num, "书籍编号");
+	strcpy((*library)->book.book_num, "编号");
     strcpy((*library)->book.book_name, "书籍名字");
-	strcpy((*library)->book.author_name, "作者名字");
-	strcpy((*library)->book.publishing_time, "出版日期");
+	strcpy((*library)->book.author_name, "作者名");
+	strcpy((*library)->book.publishing_time, "出版时间");
     (*library)->next = NULL;
 	return LIBSUCCESS;
 }
@@ -191,7 +191,7 @@ int library_findbook(LIBRARY_LIST_TYPE *library, BOOK_INFO_TYPE *book_info)
 	}
 	if (!strcmp(work_pointer->book.book_name, book_info->book_name))
 	{
-		/* 把要查找的书籍的信息付给book_info结构体 */
+		/* 把要查找的书籍的信息付给book_info结构体指针指向的结构体 */
 		memcpy(book_info, &work_pointer->book, sizeof(BOOK_INFO_TYPE));
 		return LIBSUCCESS;
 	}
@@ -232,12 +232,12 @@ int library_number(LIBRARY_LIST_TYPE library)
 }
 
 /* 打印library中的书籍 */
-void library_display(LIBRARY_LIST_TYPE library)
+int library_display(LIBRARY_LIST_TYPE library)
 {
 	if (library == NULL)
 	{
 		printf("请调用library_init函数将图书馆初始化\n");
-		return;
+		return LIBNOINIT;
 	}
 	/* 定义一个工作指针指向头结点 */
     LIBRARY_LIST_TYPE work_pointer;
@@ -246,10 +246,16 @@ void library_display(LIBRARY_LIST_TYPE library)
     while (work_pointer != NULL)
     {
 		/* 没有到达文件尾则打印书籍信息并继续循环 */
-        printf("%4s\t\t%s\t\t%s\t\t%s\n", work_pointer->book.book_num,\
-		  work_pointer->book.book_name, work_pointer->book.author_name,\
-		  work_pointer->book.publishing_time);
+        book_display(work_pointer->book);
 		work_pointer = work_pointer->next;
 	}
-	return;
+	return LIBSUCCESS;
+}
+
+/* 打印图书的信息 */
+void book_display(BOOK_INFO_TYPE book_info)
+{
+    printf("%s\t\t%s\t\t%s\t\t%s\n", book_info.book_num,\
+            book_info.book_name, book_info.author_name,\
+            book_info.publishing_time);
 }

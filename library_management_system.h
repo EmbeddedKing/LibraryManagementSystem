@@ -1,15 +1,15 @@
 #ifndef __LIBRARY_MANAGEMENT_SYSTEM_H__
 #define __LIBRARY_MANAGEMENT_SYSTEM_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "library_list.h"
-#include "library_file.h"
 #include "global.h"
+#include "library_file.h"
+#include "library_menu.h"
+#include "library_list.h"
 
 /* 初始化图书管理系统 */
-void init_library_management_system(LIBRARY_LIST_TYPE *library, FILE **library_fp);
+void lib_manage_sys_init(LIBRARY_LIST_TYPE *library, FILE **data_file);
+/* 退出图书管理系统 */
+void lib_manage_sys_exit(LIBRARY_LIST_TYPE *library, FILE **data_file);
 /* 打印操作结果 */
 void print_result(int result);
 

@@ -1,8 +1,20 @@
 #include "library_management_system.h"
 
-void init_library_management_system(LIBRARY_LIST_TYPE *library, FILE **library_fp)
+void lib_manage_sys_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 {
+	printf("正在启动初始化程序...");
+	print_result(library_init(library));
+	printf("正在将文件中的数据读入到library链表中并清空文件...");
+	print_result(file_init(library, data_file));
+}
 
+void lib_manage_sys_exit(LIBRARY_LIST_TYPE *library, FILE **data_file)
+{
+	printf("正在启动退出程序...\n");
+	printf("正在将数据写入文件...");
+	print_result(file_write(library, *data_file));
+	printf("正在关闭文件...");
+	print_result(file_close(*data_file));
 }
 
 /* 打印操作结果 */
@@ -41,6 +53,9 @@ void print_result(int result)
 			break;
 		case FILECLOSE:
 			printf("文件关闭失败\n");
+			break;
+		case SYSEXIT:
+			printf("退出图书管理系统\n");
 			break;
 		default:
 			printf("无法识别的错误类型\n");
