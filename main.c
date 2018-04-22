@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 	lib_manage_sys_init(&library, &data_file);
 	while (1)
 	{
+		scanf("%*[^\n]%*c");
 		menu_display();
 		scanf("%d", &sel);
 		ret = menu_handle(sel, &library);
