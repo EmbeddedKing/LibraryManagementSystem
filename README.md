@@ -18,4 +18,4 @@
 >     制作了图书管理系统的UI即菜单，优化了代码
 >     系统不间断工作（while循环），由用户来决定要操作的功能
 >     新增两个文件，1个头文件，1个源文件
-> library_menu.h、library_menu.c
+>     library_menu.h、library_menu.c
