@@ -54,6 +54,15 @@ void print_result(int result)
 		case FILECLOSE:
 			printf("文件关闭失败\n");
 			break;
+		case PWSUCCESS:
+			printf("登录成功\n");
+			break;
+		case PWNOEXIST:
+			printf("账号不存在\n");
+			break;
+		case PWFAIL:
+			printf("密码错误\n");
+			break;
 		case SYSEXIT:
 			printf("退出图书管理系统\n");
 			break;

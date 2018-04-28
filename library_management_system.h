@@ -5,6 +5,7 @@
 #include "library_file.h"
 #include "library_menu.h"
 #include "library_list.h"
+#include "library_passwd.h"
 
 /* 初始化图书管理系统 */
 void lib_manage_sys_init(LIBRARY_LIST_TYPE *library, FILE **data_file);

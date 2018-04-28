@@ -21,7 +21,13 @@
 #define FILESUCCESS       8    /* file操作成功 */
 #define FILENOOPEN        9    /* file未打开 */
 #define FILECLOSE         10   /* file关闭失败 */
-#define SYSEXIT           11   /* 系统退出 */
+#define PWSUCCESS         11   /* 登录成功 */
+#define PWNOEXIST         12   /* 账号不存在 */
+#define PWFAIL            13   /* 密码错误 */
+#define SYSEXIT           14   /* 系统退出 */
+
+static char admin[20] = "admin";
+static char adminpw[20] = "123456";
 
 /* 书籍信息结构体
  * 增加属性需要修改以下函数内容
