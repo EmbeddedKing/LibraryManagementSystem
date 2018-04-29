@@ -10,6 +10,8 @@ int main(int argc, char **argv)
 	int sel = 0;
 	char account[20] = {};
 	char passwd[20] = {};
+	int ser_sockfd = 0;
+
 	while (ret != PWSUCCESS)
 	{
 		system("clear");
@@ -25,7 +27,8 @@ int main(int argc, char **argv)
 	}
 	system("clear");
 	print_result(ret);
-	lib_manage_sys_init(&library, &data_file);
+	print_result(socket_udp_init(&ser_sockfd, "192.168.0.244", 6363));
+	lib_manage_sys_init(&library);
 	while (1)
 	{
 		menu_display();
@@ -41,7 +44,7 @@ int main(int argc, char **argv)
 			break;
 		}
 	}
-	lib_manage_sys_exit(&library, &data_file);
+	lib_manage_sys_exit(&library);
 
 	return 0;
 }

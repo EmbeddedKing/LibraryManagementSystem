@@ -6,11 +6,12 @@
 #include "library_menu.h"
 #include "library_list.h"
 #include "library_passwd.h"
+#include "library_socket.h"
 
 /* 初始化图书管理系统 */
-void lib_manage_sys_init(LIBRARY_LIST_TYPE *library, FILE **data_file);
+void lib_manage_sys_init(LIBRARY_LIST_TYPE *library);
 /* 退出图书管理系统 */
-void lib_manage_sys_exit(LIBRARY_LIST_TYPE *library, FILE **data_file);
+void lib_manage_sys_exit(LIBRARY_LIST_TYPE *library);
 /* 打印操作结果 */
 void print_result(int result);
 

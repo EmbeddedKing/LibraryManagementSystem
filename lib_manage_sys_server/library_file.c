@@ -3,7 +3,7 @@
 /* 将library.data中已有的文件数据添加到library链表中
  * 并清空library文件
  */
-int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
+int file_init(LIBRARY_LIST_TYPE *library)
 {
 	/* 如果链表没有被初始化，则返回LIBNOINIT错误 */
 	if ((*library) == NULL)
@@ -15,10 +15,12 @@ int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 	{
 		return LIBNOEMPTY;
 	}
+	/* 定义一个文件流指针 */
+	FILE *data_file;
 	/* 先将文件以只读的方式打开 */
-	(*data_file) = fopen("library.data", "r");
+	data_file = fopen("library.data", "r");
 	/* 如果文件存在则将数据全部读出 */
-	if((*data_file) != NULL)
+	if(data_file != NULL)
 	{
 		/* 定义一个工作指针始终指向尾节点
 		 * 定义一个新书类型用来接收文件中的数据
@@ -27,7 +29,7 @@ int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 		work_pointer = *library;
 		char buf[100];
 		/* 如果读到文件尾则跳出循环 */
-		while (!feof(*data_file))
+		while (!feof(data_file))
 		{
 			/* 给新节点分配空间 */
 			new_book = NULL;
@@ -40,7 +42,7 @@ int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 			/* 分配成功把数据清空 */
 			memset(new_book, 0, sizeof(struct _library_node));
 			/*把书号取出来 */
-			if (fgets(buf, sizeof(buf), *data_file) != NULL)
+			if (fgets(buf, sizeof(buf), data_file) != NULL)
 			{
 				/* 把取出来的数据存入到buf中，并把尾部的换行符去掉 */
 				strncpy(new_book->book.book_num, buf, strlen(buf)-1);
@@ -54,7 +56,7 @@ int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 				break;
 			}
 			/* 把书名取出来 */
-			if (fgets(buf, sizeof(buf), *data_file) != NULL)
+			if (fgets(buf, sizeof(buf), data_file) != NULL)
 			{
 				strncpy(new_book->book.book_name, buf, strlen(buf)-1);
 				memset(buf, 0, sizeof(buf));
@@ -65,7 +67,7 @@ int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 				break;
 			}
 			/* 把作者名取出来 */
-			if (fgets(buf, sizeof(buf), *data_file) != NULL)
+			if (fgets(buf, sizeof(buf), data_file) != NULL)
 			{
 				strncpy(new_book->book.author_name, buf, strlen(buf)-1);
 				memset(buf, 0, sizeof(buf));
@@ -76,7 +78,7 @@ int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 				break;
 			}
 			/* 把出版时间取出来 */
-			if (fgets(buf, sizeof(buf), *data_file) != NULL)
+			if (fgets(buf, sizeof(buf), data_file) != NULL)
 			{
 				strncpy(new_book->book.publishing_time, buf, strlen(buf)-1);
 				memset(buf, 0, sizeof(buf));
@@ -93,29 +95,21 @@ int file_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
 			work_pointer = work_pointer->next;
 		}
 		/* 操作完毕，关闭文件 */
-		fclose(*data_file);
+		fclose(data_file);
+		/* 返回文件写入成功 */
+		return FILESUCCESS;
 	}
-	/* 将数据文件再次以只写的方式打开，里面的数据会被清空 */
-	(*data_file) = fopen("library.data", "w");
-	/* 如果打开失败，则返回FILENOOPEN错误 */
-	if ((*data_file) == NULL)
+	else
 	{
 		return FILENOOPEN;
 	}
-	/* 否则返回FILESUCCESS错误 */
-	return FILESUCCESS;
 }
 
 /* 此函数将链表数据写入到缓冲区
  * 最好只调用一次，否则会出错
  */
-int file_write(LIBRARY_LIST_TYPE *library, FILE *data_file)
+int file_write(LIBRARY_LIST_TYPE *library)
 {
-	/* 如果文件未打开，则返回FILENOOPEN错误 */
-	if (data_file == NULL)
-	{
-		return FILENOOPEN;
-	}
 	/* 如果library未初始化或初始化失败，则返回LIBNOINIT错误 */
 	if ((*library) == NULL)
 	{
@@ -125,6 +119,15 @@ int file_write(LIBRARY_LIST_TYPE *library, FILE *data_file)
 	if (library_empty(*library))
 	{
 		return LIBEMPTY;
+	}
+
+	FILE *data_file;
+	/* 将数据文件再次以只写的方式打开，里面的数据会被清空 */
+	data_file = fopen("library.data", "w");
+	/* 如果打开失败，则返回FILENOOPEN错误 */
+	if (data_file == NULL)
+	{
+		return FILENOOPEN;
 	}
 	/* 定义一个工作指针，工作指针指向第一个节点 */
 	LIBRARY_LIST_TYPE work_pointer;
@@ -143,6 +146,7 @@ int file_write(LIBRARY_LIST_TYPE *library, FILE *data_file)
 		fputc('\n', data_file);
 		work_pointer = work_pointer->next;
 	}
+	fclose(data_file);
 	/* 全部写完返回FILESUCCESS */
 	return FILESUCCESS;
 }

@@ -1,20 +1,18 @@
 #include "library_management_system.h"
 
-void lib_manage_sys_init(LIBRARY_LIST_TYPE *library, FILE **data_file)
+void lib_manage_sys_init(LIBRARY_LIST_TYPE *library)
 {
 	printf("正在启动初始化程序...");
 	print_result(library_init(library));
 	printf("正在将文件中的数据读入到library链表中并清空文件...");
-	print_result(file_init(library, data_file));
+	print_result(file_init(library));
 }
 
-void lib_manage_sys_exit(LIBRARY_LIST_TYPE *library, FILE **data_file)
+void lib_manage_sys_exit(LIBRARY_LIST_TYPE *library)
 {
 	printf("正在启动退出程序...\n");
 	printf("正在将数据写入文件...");
-	print_result(file_write(library, *data_file));
-	printf("正在关闭文件...");
-	print_result(file_close(*data_file));
+	print_result(file_write(library));
 }
 
 /* 打印操作结果 */
@@ -49,7 +47,7 @@ void print_result(int result)
 			printf("文件操作成功\n");
 			break;
 		case FILENOOPEN:
-			printf("文件打开失败或未打开\n");
+			printf("文件打开失败\n");
 			break;
 		case FILECLOSE:
 			printf("文件关闭失败\n");
@@ -62,6 +60,12 @@ void print_result(int result)
 			break;
 		case PWFAIL:
 			printf("密码错误\n");
+			break;
+		case SOCKINITSUCCESS:
+			printf("套接字初始化成功\n");
+			break;
+		case SOCKINITERR:
+			printf("套接字初始化出错\n");
 			break;
 		case SYSEXIT:
 			printf("退出图书管理系统\n");

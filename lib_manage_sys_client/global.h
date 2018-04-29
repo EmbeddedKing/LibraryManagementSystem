@@ -24,7 +24,9 @@
 #define PWSUCCESS         11   /* 登录成功 */
 #define PWNOEXIST         12   /* 账号不存在 */
 #define PWFAIL            13   /* 密码错误 */
-#define SYSEXIT           14   /* 系统退出 */
+#define SOCKINITSUCCESS   14   /* 套接字初始化成功 */
+#define SOCKINITERR       15   /* 套接字初始化出错 */
+#define SYSEXIT           16   /* 系统退出 */
 
 static char admin[20] = "admin";
 static char adminpw[20] = "123456";
@@ -47,5 +49,12 @@ typedef struct _library_node {
     struct _book_info book;
     struct _library_node *next;
 }LIBRARY_NODE_TYPE, *LIBRARY_LIST_TYPE;
+
+typedef struct _user_info {
+	char user_name[20];
+	char user_ago[5];
+	char user_sex[5];
+	char user_address[50];
+}USER_INFO_TYPE;
 
 #endif
